@@ -20,16 +20,17 @@ namespace MyTypeOf
                 {
                     modificator += "virtual";
                 }
-                Console.WriteLine($"{modificator} {method.ReturnType.Name} {method.Name} :");
+                Console.Write($"{modificator} {method.ReturnType.Name} {method.Name} (");
                 ParameterInfo[] parameterInfos = method.GetParameters();
                 for (int i=0; i<parameterInfos.Length; i++)
                 {
-                    Console.WriteLine($"{parameterInfos[i].ParameterType.Name} {parameterInfos[i].Name}");
+                    Console.Write($"{parameterInfos[i].ParameterType.Name} {parameterInfos[i].Name}");
                     if (i+1<parameterInfos.Length)
                     {
-                        Console.WriteLine(", ");
+                        Console.Write(", ");
                     }
                 }
+                Console.WriteLine(")");
             }
             //foreach(var mi in type.GetMembers())
             //{
