@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace MyTypeOf
 {
@@ -7,11 +8,34 @@ namespace MyTypeOf
         static void Main(string[] args)
         {
             Type type = Type.GetType("MyTypeOf.User", false, true);
-            foreach(var mi in type.GetMembers())
+            Console.WriteLine("Methods");
+            foreach(MethodInfo method in type.GetMethods())
             {
-                Console.WriteLine($"{mi.DeclaringType} {mi.MemberType} {mi.Name}");
+                string modificator = "";
+                if (method.IsStatic)
+                {
+                    modificator += "static";
+                }
+                if (method.IsVirtual)
+                {
+                    modificator += "virtual";
+                }
+                Console.WriteLine($"{modificator} {method.ReturnType.Name} {method.Name} :");
+                ParameterInfo[] parameterInfos = method.GetParameters();
+                for (int i=0; i<parameterInfos.Length; i++)
+                {
+                    Console.WriteLine($"{parameterInfos[i].ParameterType.Name} {parameterInfos[i].Name}");
+                    if (i+1<parameterInfos.Length)
+                    {
+                        Console.WriteLine(", ");
+                    }
+                }
             }
-            Console.ReadKey();
+            //foreach(var mi in type.GetMembers())
+            //{
+            //    Console.WriteLine($"{mi.DeclaringType} {mi.MemberType} {mi.Name}");
+            //}
+            //Console.ReadKey();
         }
     }
 }
